@@ -27,9 +27,10 @@
                     <fieldset>
 
                         <legend class="text-center rounded p-1 m-1 bg-success text-light">Ajouter un menu</legend>
-                    <div class="form-group">
-                        <input type="text" wire:model.lazy="recipe" class="form-control" placeholder="Nom du plat">
-                       @error('recipe') <span class="error " style="color:red">{{$message}}</span>@enderror
+                         <input type="hidden" wire:model="selectedId">
+                        <div class="form-group">
+                        <input type="text" wire:model.lazy="libelle" class="form-control" placeholder="Nom du plat">
+                       @error('libelle') <span class="error " style="color:red">{{$message}}</span>@enderror
                     </div>
                     <div class="form-group">
                     <textarea name="" id="" cols="10" wire:model.lazy="ingredients" rows="5" class="form-control" placeholder="ingredient"></textarea>
@@ -39,7 +40,11 @@
                     <textarea name="" id="" cols="10" wire:model.lazy="preparations" rows="5" class="form-control" placeholder="preparations"></textarea>
                     @error('preparations')<span class="error" style="color:red">{{$message}}</span>@enderror
                     </div>
-                <div class="form-group"> <button type="button" wire:click="addRecipe()" class="btn btn-outline-info btn-sm btn-block">Enregister</button></div>
+                    @if(!$updateMode)
+                    <div class="form-group"> <button type="button" wire:click="addRecipe()" class="btn btn-outline-info btn-sm btn-block">Enregister</button></div>
+                    @else
+                    <div class="form-group"> <button type="button" wire:click="update()" class="btn btn-outline-info btn-sm btn-block">Modifier</button></div>
+                    @endif
                 </fieldset>
                 </form>
             </div>
@@ -66,7 +71,8 @@
                                             <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
                                         </svg>
                                     </button>
-                                    <button wire:click="show({{$recipe->id}})" class="float-right btn btn-warning  mr-2">
+
+                                    <button wire:click="edit({{$recipe->id}})" class="float-right btn btn-warning  mr-2">
                                         <svg class="bi bi-pencil-square light" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <svg class="bi bi-pencil" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd" d="M11.293 1.293a1 1 0 0 1 1.414 0l2 2a1 1 0 0 1 0 1.414l-9 9a1 1 0 0 1-.39.242l-3 1a1 1 0 0 1-1.266-1.265l1-3a1 1 0 0 1 .242-.391l9-9zM12 2l2 2-9 9-3 1 1-3 9-9z"/>

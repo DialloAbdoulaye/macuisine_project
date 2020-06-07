@@ -12,8 +12,11 @@ class MealMenu extends Component
     public $add =false;
     public $showRecipe;
     public $libelle;
+    public $lib;
     public $ingredients;
     public $preparations;
+    public $selectedId;
+    public $updateMode = false;
 
     public $inArray=[];
     public $prepaArray =[];
@@ -22,7 +25,7 @@ class MealMenu extends Component
     public function mount(){
         $this->recipes =Recipe::all();
         $this->showRecipe = Recipe::first();
-        $this->libelle = $this->showRecipe->libelle;
+        $this->lib = $this->showRecipe->libelle;
         $this->ingred = $this->showRecipe->ingredients;
         $this->inArray = explode(',',$this->ingred);
         $this->prepa = $this->showRecipe->preparations;
@@ -48,11 +51,11 @@ class MealMenu extends Component
 
     public function addRecipe(){
         $this->validate([
-            'recipe' => 'required',
+            'libelle' => 'required',
             'ingredients'=>'required',
             'preparations'=>'required'
         ]);
-         Recipe::create(['libelle' => $this->recipe,
+         Recipe::create(['libelle' => $this->libelle,
                          'ingredients'=>$this->ingredients,
                          'preparations'=>$this->preparations,
                          ]);
@@ -60,7 +63,7 @@ class MealMenu extends Component
         if(  $this->add){
             $this->refresh();
             session()->flash('success','Recipe added successfuly!');
-            $this->reset('recipe');
+            $this->reset('libelle');
             $this->reset('ingredients');
             $this->reset('preparations');
 
@@ -75,6 +78,41 @@ class MealMenu extends Component
        $this->inArray = explode(',',$this->ingred);
         $this->prepa = $this->showRecipe->preparations;
         $this->prepaArray = explode(',',$this->prepa);
+    }
+
+    public function edit(int $id){
+        $record =Recipe::findOrfail($id);
+
+        $this->selectedId  =$id;
+        $this->libelle  =$record->libelle;
+        $this->ingredients  =$record->ingredients;
+        $this->preparations  =$record->preparations;
+        $this->updateMode = true;
+
+    }
+
+
+    public function update(){
+        $this->validate([
+            'libelle' => 'required',
+            'ingredients'=>'required',
+            'preparations'=>'required'
+        ]);
+            if( $this->selectedId){
+                $record = Recipe::find($this->selectedId);
+            session()->flash('success','Recipe updated successfuly!');
+            $record->update([
+                'libelle'=>$this->libelle,
+                'ingredients'=>$this->ingredients,
+                'preparations'=>$this->preparations
+            ]);
+
+            $this->reset('libelle');
+            $this->reset('ingredients');
+            $this->reset('preparations');
+            $this->updateMode = false;
+
+}
     }
 
     public function destroy(int $id){
