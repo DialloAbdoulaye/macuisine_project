@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 use App\Recipe;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Illuminate\Support\Str;
 
 class MealMenu extends Component
 {
@@ -20,6 +21,8 @@ class MealMenu extends Component
 
     public $inArray=[];
     public $prepaArray =[];
+
+    public $searchBylib;
 
 
     public function mount(){
@@ -122,6 +125,20 @@ class MealMenu extends Component
            $this->refresh();
        }
        session()->flash('delete','Recipe removed successfuly!');
+    }
+
+
+    public function searchBylibelle(string $searchBylib){
+        $plat = Recipe::all();
+
+        $filtered =$plat->filter(function($value) {
+          return $value == $searchBylib;
+        });
+
+     dd($filtered);
+
+        $containsPlat = Str::contains($filtered[$searchBylib],$filtered);
+
     }
 
 
