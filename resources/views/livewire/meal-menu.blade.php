@@ -1,5 +1,5 @@
-<div wire:poll.1s>
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark ">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -13,11 +13,24 @@
                 <a class="nav-link text-light" href="#">Apropos</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" wire:model="searchBylib" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-warning my-2 my-sm-0" wire:click="searchBylibelle('salade')">Search</button>
-        </form>
-        </div>
+         <div class="relative">
+            @livewire('recipe-search-bar')
+            {{--  <div class="absolute bg-gray-800 rounded w-64">
+
+                {{--  <ul>
+                    @if($searchList->count()>0)
+                            @foreach ($searchList as $item)
+                            <li class="border-b border-gray-700">
+                                <a href="#" class="block hover:bg-gray-700 px-3 py-3">{{ $item->libelle}}</a>
+                            </li>
+                            @endforeach
+                    @endif
+
+                </ul>  --}}
+            </div>
+            </div>
+         </div>
+
     </nav>
 
     <div class="p-1 mr-2">
@@ -25,7 +38,6 @@
             <div class="p-2 m-2 shadow p-3 mb-5 bg-white align-content-sm-start border col-md-3" style="height: 600px;">
                 <form class="form-group">
                     <fieldset>
-
                         <legend class="text-center rounded p-1 m-1 bg-success text-light">Ajouter un menu</legend>
                          <input type="hidden" wire:model="selectedId">
                         <div class="form-group">
@@ -114,41 +126,6 @@
                                        </ol>
             </div>
            </div>
-            {{-- <div class="card-group">
-                    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-                    <img src="{{asset('images/recipe.jpg')}}" class="card-img-top" alt="..." height="200", width="100">
-                            <div class="card-body">
-
-                                <div class="card-header text-center bg-info">
-                                    <h5 class="card-title bg-info text-center">{{$libelle}}</h5>
-                                </div>
-                            <div class="card mt-5 mb-3 shadow-lg p-3 mb-5 bg-white rounded">
-                                <div class="card-header text-center ">
-                                    <h5>Ingredients</h5>
-                                </div>
-                                <div class="card-body">
-                                    <ul class="list-group">
-                                        @foreach ($inArray as $ingredient)
-                                                <ol class="list-group-item">{{$ingredient}}</ol>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="card shadow-lg p-3 mb-5 bg-white rounded">
-                                <div class="card-header text-center ">
-                                <h5>Preparations</h5>
-                                </div>
-                                <div class="card-body">
-                                    <ul class="list-group">
-                                        @foreach ($prepaArray as $prepa)
-                                            <ol class="list-group-item">{{$prepa}}</ol>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                            </div>
-                    </div>
-            </div> --}}
         </div>
 
 </div>

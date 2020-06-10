@@ -22,7 +22,8 @@ class MealMenu extends Component
     public $inArray=[];
     public $prepaArray =[];
 
-    public $searchBylib;
+    public $searchBylib = "";
+    protected $searchList= [];
 
 
     public function mount(){
@@ -45,9 +46,15 @@ class MealMenu extends Component
          $this->prepaArray = explode(',',$this->prepa);
     }
 
+    public function search(){
+        $this->searchList = Recipe::where('libelle', 'like', '%' . $this->searchBylib . '%')
+        ->orderBy('created_at', 'desc');
+        dd($this->searchList);
+    }
+
     public function render()
     {
-        return view('livewire.meal-menu');
+        return view('livewire.meal-menu',['searchList'=>$this->searchList]);
     }
 
 
@@ -128,18 +135,15 @@ class MealMenu extends Component
     }
 
 
-    public function searchBylibelle(string $searchBylib){
-        $plat = Recipe::all();
+    // public function searchBylibelle(string $searchBylib){
+    //     $plat = Recipe::all();
 
-        $filtered =$plat->filter(function($value) {
-          return $value == $searchBylib;
-        });
+    //     $filtered =$plat->filter(function($value) {
+    //       return $value == $searchBylib;
+    //     });
+    //     $containsPlat = Str::contains($filtered[$searchBylib],$filtered);
 
-     dd($filtered);
-
-        $containsPlat = Str::contains($filtered[$searchBylib],$filtered);
-
-    }
+    // }
 
 
 
